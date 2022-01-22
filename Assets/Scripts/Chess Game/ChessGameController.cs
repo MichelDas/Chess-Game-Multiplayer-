@@ -91,7 +91,7 @@ public class ChessGameController : MonoBehaviour
 
     private ChessPlayer GetopponentToPlayer(ChessPlayer activePlayer)
     {
-        throw new NotImplementedException();
+        return activePlayer == whitePlayer ? blackPlayer : whitePlayer;
     }
 
     internal bool IsTeamTurnActive(TeamColor team)
