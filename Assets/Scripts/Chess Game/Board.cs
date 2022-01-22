@@ -9,8 +9,8 @@ public class Board : MonoBehaviour
     [SerializeField] private Transform bootomLeftSquareTransform;
     [SerializeField] private float squareSize;
 
-    [SerializeField] private Piece[,] grid;
-    [SerializeField] private Piece selectedPiece;
+    private Piece[,] grid;
+    private Piece selectedPiece;
     private ChessGameController chessGameController;
     private SquareSelector squareSelector;
 
@@ -40,6 +40,9 @@ public class Board : MonoBehaviour
     // this will be called when player clicks on the board
     public void OnSquareSelected(Vector3 inputPosition)
     {
+        if (!chessGameController.IsGameInProgress())
+            return;
+
         Vector2Int coords = CalculateCoordsFromPosition(inputPosition);
         Piece piece = GetPieceOnSquare(coords);
 
@@ -105,7 +108,7 @@ public class Board : MonoBehaviour
         chessGameController.EndTurn();
     }
 
-    private void UpdateBoardOnPieceMove(Vector2Int NewCoords, Vector2Int oldCoords, Piece newPiece, Piece oldPiece)
+    public void UpdateBoardOnPieceMove(Vector2Int NewCoords, Vector2Int oldCoords, Piece newPiece, Piece oldPiece)
     {
         grid[oldCoords.x, oldCoords.y] = oldPiece;
         grid[NewCoords.x, NewCoords.y] = newPiece;
