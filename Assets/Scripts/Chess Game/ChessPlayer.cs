@@ -70,6 +70,8 @@ public class ChessPlayer
 
             if(oponent.CheckIfIsAttackingPiece<T>())
                 coordsToRomove.Add(coords);
+
+            board.UpdateBoardOnPieceMove(selectedPiece.occupiedSquare, coords, selectedPiece, pieceOnSquare);
         }
 
         foreach(var coords in coordsToRomove)

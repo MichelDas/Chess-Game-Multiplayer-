@@ -133,6 +133,13 @@ public class ChessGameController : MonoBehaviour
         SetGameState(GameState.Finished);
     }
 
+    public void OnPieceRemoved(Piece piece)
+    {
+        ChessPlayer pieceOwner = piece.team == TeamColor.White ? whitePlayer : blackPlayer;
+        pieceOwner.RemovePiece(piece);
+        Destroy(piece.gameObject);
+    }
+
     private void ChangeActiveTeam()
     {
         activePlayer = activePlayer == whitePlayer ? blackPlayer : whitePlayer;
@@ -157,5 +164,13 @@ public class ChessGameController : MonoBehaviour
     {
         return state == GameState.Play;
     }
+
+    // This will remove all moves where the king will be checked
+    public void RemoveMovesEnablingAttackOnPieceOfType<T>(Piece piece) where T : Piece
+    {
+        activePlayer.RemoveMovesEnablingAttackOnPiece<T>(GetopponentToPlayer(activePlayer), piece);
+    }
+
+
 
 }

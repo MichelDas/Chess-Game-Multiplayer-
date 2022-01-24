@@ -71,6 +71,7 @@ public class Board : MonoBehaviour
 
     private void SelectPiece(Piece piece)
     {
+        chessGameController.RemoveMovesEnablingAttackOnPieceOfType<King>(piece);
         selectedPiece = piece;
         List<Vector2Int> selection = selectedPiece.availableMoves;
         ShowSelectionSquares(selection);
@@ -95,12 +96,36 @@ public class Board : MonoBehaviour
         squareSelector.ClearSelection();
     }
 
+    // this is called when a piece is moved
+    // in a coords
     private void OnSelectedPieceMoved(Vector2Int coords, Piece piece)
     {
+        // opponent er piece kete fela
+        TryToTakeOppositePiece(coords);
+
         UpdateBoardOnPieceMove(coords, piece.occupiedSquare, piece, null);
         selectedPiece.MovePiece(coords);
         DeselectPiece();
         EndTurn();
+    }
+
+    // this will eleminate the piece on coords and
+    // put piece there
+    private void TryToTakeOppositePiece(Vector2Int coords)
+    {
+        Piece piece = GetPieceOnSquare(coords);
+
+        if (piece != null && !selectedPiece.IsFromSameTeam(piece))
+            TakePiece(piece);
+    }
+
+    private void TakePiece(Piece piece)
+    {
+        if (piece)
+        {
+            grid[piece.occupiedSquare.x, piece.occupiedSquare.y] = null;
+            chessGameController.OnPieceRemoved(piece);
+        }
     }
 
     private void EndTurn()
