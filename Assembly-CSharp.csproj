@@ -56,11 +56,13 @@
     <Compile Include="Assets/Scripts/Chess Game/Pieces/Rook.cs" />
     <Compile Include="Assets/Scripts/Chess Game/Pieces/Pawn.cs" />
     <Compile Include="Assets/Scripts/Input System/ColliderInputReciever.cs" />
+    <Compile Include="Assets/Photon/PhotonLibs/WebSocket/WebSocket.cs" />
     <Compile Include="Assets/Scripts/Chess Game/Pieces/Bishop.cs" />
+    <Compile Include="Assets/Photon/PhotonLibs/WebSocket/SocketWebTcp.cs" />
     <Compile Include="Assets/Scripts/Chess Game/Piece.cs" />
     <Compile Include="Assets/Scripts/Enums/TeamColor.cs" />
     <Compile Include="Assets/Scripts/Chess Game/Board.cs" />
-    <Compile Include="Assets/Scripts/UIButton.cs" />
+    <Compile Include="Assets/Scripts/UI/UIButton.cs" />
     <Compile Include="Assets/Scripts/Chess Game/Pieces/King.cs" />
     <Compile Include="Assets/Scripts/Enums/PieceType.cs" />
     <Compile Include="Assets/Scripts/Tweeners/IObjectTweener.cs" />
@@ -76,8 +78,9 @@
     <Compile Include="Assets/Scripts/Chess Game/Pieces/Queen.cs" />
     <Compile Include="Assets/Scripts/Input System/IInputHandler.cs" />
     <Compile Include="Assets/Scripts/Chess Game/ChessGameController.cs" />
-    <Compile Include="Assets/Photon/PhotonLibs/WebSocket/SocketWebTcp.cs" />
-    <Compile Include="Assets/Photon/PhotonLibs/WebSocket/WebSocket.cs" />
+    <Compile Include="Assets/Scripts/Chess Game/SinglePlayerBoard.cs" />
+    <Compile Include="Assets/Scripts/Chess Game/NetworkManager.cs" />
+    <Compile Include="Assets/Scripts/UI/UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.xml" />
@@ -314,14 +317,14 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>/Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
+    <Reference Include="websocket-sharp">
+      <HintPath>Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
       <HintPath>Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
     </Reference>
-    <Reference Include="websocket-sharp">
-      <HintPath>Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -700,6 +703,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="PhotonUnityNetworking.csproj">
+      <Project>{037169F2-3880-DB0A-5A75-994BE0D0E2CB}</Project>
+      <Name>PhotonUnityNetworking</Name>
+    </ProjectReference>
     <ProjectReference Include="PhotonChat.csproj">
       <Project>{BA142AC9-7CDC-1681-94EF-DEE3C422AEEF}</Project>
       <Name>PhotonChat</Name>
@@ -712,14 +719,6 @@
       <Project>{C23FACAC-E50D-A16A-DEBA-721F69E45BD0}</Project>
       <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.csproj">
-      <Project>{037169F2-3880-DB0A-5A75-994BE0D0E2CB}</Project>
-      <Name>PhotonUnityNetworking</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
-      <Project>{39A287BC-46E4-69A8-14AD-E7596AFCD7F2}</Project>
-      <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="PhotonRealtime.csproj">
       <Project>{7D2F2511-B068-EFA3-95FC-891A77437885}</Project>
       <Name>PhotonRealtime</Name>
@@ -727,6 +726,10 @@
     <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
       <Project>{F49FA09B-EE04-2611-9D8B-40A3BF903A45}</Project>
       <Name>PhotonUnityNetworking.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
+      <Project>{39A287BC-46E4-69A8-14AD-E7596AFCD7F2}</Project>
+      <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,18 +1,15 @@
 ﻿<Properties StartupConfiguration="{B6061949-D265-BA4D-C676-96FE9F2872F3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Chess Game/ChessPlayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/UIManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Chess Game/ChessGameController.cs" Line="129" Column="1" />
-      <File FileName="Assets/Scripts/Input System/BoarInputHandler.cs" Line="18" Column="38" />
-      <File FileName="Assets/Scripts/Input System/ColliderInputReciever.cs" Line="28" Column="1" />
-      <File FileName="Assets/Scripts/Chess Game/Board.cs" Line="109" Column="19" />
-      <File FileName="Assets/Scripts/Chess Game/ChessPlayer.cs" Line="74" Column="110" />
-      <File FileName="Assets/Scripts/Chess Game/Piece.cs" Line="43" Column="53" />
-      <File FileName="Assets/Scripts/Chess Game/BoardLayout.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Chess Game/ChessGameController.cs" Line="99" Column="35" />
+      <File FileName="Assets/Scripts/Chess Game/Board.cs" />
+      <File FileName="Assets/Scripts/Chess Game/NetworkManager.cs" Line="17" Column="13" />
+      <File FileName="Assets/Scripts/UI/UIManager.cs" Line="7" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d85fec90-3dcc-493b-bcd7-2de6fde85586" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="db441d74-1372-442e-9f10-b691ef99eb64" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

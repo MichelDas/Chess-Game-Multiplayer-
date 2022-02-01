@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SquareSelector))]
-public class Board : MonoBehaviour
+public abstract class Board : MonoBehaviour
 {
     [SerializeField] private Transform bootomLeftSquareTransform;
     [SerializeField] private float squareSize;
@@ -15,6 +15,9 @@ public class Board : MonoBehaviour
     private SquareSelector squareSelector;
 
     public const int BOARD_SIZE = 8;
+
+    public abstract void SelectPieceMoved(Vector2 coords);
+    public abstract void SetSelectedPiece(Vector2 coords);
 
     private void Awake()
     {
@@ -49,30 +52,34 @@ public class Board : MonoBehaviour
         // When a piece is already selected
         if (selectedPiece)
         {
+            // if I am selecting the piece that is already selecting again
             if (piece != null && selectedPiece == piece)
                 DeselectPiece();
+            // if I am selecting a different piece of my team
             else if (piece != null && selectedPiece != piece && chessGameController.IsTeamTurnActive(piece.team))
-                SelectPiece(piece);
+                SelectPiece(coords);
+            // if I am selecting a square where the piece can be moved
             else if (selectedPiece.CanMoveTo(coords))
-                OnSelectedPieceMoved(coords, selectedPiece);
+                SelectPieceMoved(coords);
         }
         // when No piece is selected
         else
         {
-            // if the piece clicked on is out of my color
+            // if the piece clicked, is of my color
             // select it
             if (piece != null && chessGameController.IsTeamTurnActive(piece.team))
             {
-                SelectPiece(piece);
+                SelectPiece(coords);
             }
         }
     }
 
 
-    private void SelectPiece(Piece piece)
+    private void SelectPiece(Vector2Int coords)
     {
+        Piece piece = GetPieceOnSquare(coords);
         chessGameController.RemoveMovesEnablingAttackOnPieceOfType<King>(piece);
-        selectedPiece = piece;
+        SetSelectedPiece(coords);
         List<Vector2Int> selection = selectedPiece.availableMoves;
         ShowSelectionSquares(selection);
     }
@@ -98,15 +105,23 @@ public class Board : MonoBehaviour
 
     // this is called when a piece is moved
     // in a coords
-    private void OnSelectedPieceMoved(Vector2Int coords, Piece piece)
+    public void OnSelectedPieceMoved(Vector2Int coords)
     {
         // opponent er piece kete fela
         TryToTakeOppositePiece(coords);
 
-        UpdateBoardOnPieceMove(coords, piece.occupiedSquare, piece, null);
+        UpdateBoardOnPieceMove(coords, selectedPiece.occupiedSquare, selectedPiece, null);
         selectedPiece.MovePiece(coords);
         DeselectPiece();
         EndTurn();
+    }
+
+    // this will get the piece in the coords and
+    // assign it in the selectedPiece
+    public void OnSetSelectedPiece(Vector2Int intCoords)
+    {
+        Piece piece = GetPieceOnSquare(intCoords);
+        selectedPiece = piece;
     }
 
     // this will eleminate the piece on coords and
@@ -186,5 +201,7 @@ public class Board : MonoBehaviour
         if (CheckIfCoordinatesAreOnBoard(squareCoords))
             grid[squareCoords.x, squareCoords.y] = newPiece;
     }
+
+    
 
 }
