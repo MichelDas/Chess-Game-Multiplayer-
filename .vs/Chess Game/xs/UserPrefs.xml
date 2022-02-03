@@ -1,17 +1,19 @@
 ﻿<Properties StartupConfiguration="{B6061949-D265-BA4D-C676-96FE9F2872F3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/UIManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Chess Game/NetworkManager.cs">
     <Files>
       <File FileName="Assets/Scripts/Chess Game/ChessGameController.cs" Line="99" Column="35" />
       <File FileName="Assets/Scripts/Chess Game/Board.cs" />
-      <File FileName="Assets/Scripts/Chess Game/NetworkManager.cs" Line="17" Column="13" />
-      <File FileName="Assets/Scripts/UI/UIManager.cs" Line="7" Column="5" />
+      <File FileName="Assets/Scripts/Chess Game/NetworkManager.cs" Line="24" Column="12" />
+      <File FileName="Assets/Scripts/UI/UIManager.cs" Line="74" Column="39" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="db441d74-1372-442e-9f10-b691ef99eb64" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/kyosapor0111/Documents/Priyosoft/Chess Game/Assets/Scripts/UI/UIManager.cs" relfile="Assets/Scripts/UI/UIManager.cs" line="48" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
