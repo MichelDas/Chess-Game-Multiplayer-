@@ -1,10 +1,15 @@
 ﻿<Properties StartupConfiguration="{B6061949-D265-BA4D-C676-96FE9F2872F3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Chess Game/NetworkManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Chess Game/Board.cs">
     <Files>
-      <File FileName="Assets/Scripts/Chess Game/ChessGameController.cs" Line="99" Column="35" />
-      <File FileName="Assets/Scripts/Chess Game/Board.cs" />
-      <File FileName="Assets/Scripts/Chess Game/NetworkManager.cs" Line="24" Column="12" />
-      <File FileName="Assets/Scripts/UI/UIManager.cs" Line="74" Column="39" />
+      <File FileName="Assets/Scripts/Chess Game/ChessGameController.cs" Line="38" Column="21" />
+      <File FileName="Assets/Scripts/Chess Game/Board.cs" Line="46" Column="36" />
+      <File FileName="Assets/Scripts/Chess Game/NetworkManager.cs" Line="86" Column="31" />
+      <File FileName="Assets/Scripts/UI/UIManager.cs" Line="52" Column="19" />
+      <File FileName="Assets/Scripts/Chess Game/MultiplayerBoard.cs" Line="36" Column="53" />
+      <File FileName="Assets/Scripts/Chess Game/SinglePlayerBoard.cs" Line="16" Column="9" />
+      <File FileName="Assets/Scripts/Chess Game/SinglePlayerGameController.cs" Line="18" Column="9" />
+      <File FileName="Assets/Scripts/Chess Game/MultiplayerGameController.cs" Line="35" Column="14" />
+      <File FileName="Assets/Scripts/Chess Game/GameInitializer.cs" Line="20" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
@@ -12,7 +17,7 @@
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="db441d74-1372-442e-9f10-b691ef99eb64" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/kyosapor0111/Documents/Priyosoft/Chess Game/Assets/Scripts/UI/UIManager.cs" relfile="Assets/Scripts/UI/UIManager.cs" line="48" column="1" />
+      <Breakpoint file="/Users/kyosapor0111/Documents/Priyosoft/Chess Game/Assets/Scripts/UI/UIManager.cs" relfile="Assets/Scripts/UI/UIManager.cs" line="50" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

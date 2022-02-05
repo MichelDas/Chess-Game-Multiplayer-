@@ -49,6 +49,12 @@ public class UIManager : MonoBehaviour
         DisableAllScreen();
     }
 
+    internal void OnGameStarted()
+    {
+        DisableAllScreen();
+        connectionStatusText.gameObject.SetActive(false);
+    }
+
     // This is called when Multiplayer Mode button is clicked
     public void OnMultiplayerModeSelected()
     {
@@ -92,5 +98,11 @@ public class UIManager : MonoBehaviour
     {
         Button buttonToDeactivate = occpiedTeam == TeamColor.White ? whiteTeamButton : blackTeamButton;
         buttonToDeactivate.interactable = false;
+    }
+
+    internal void OnGameFinished(string winner)
+    {
+        gameoverScreen.SetActive(true);
+        resultText.text = string.Format("{0} won", winner);
     }
 }

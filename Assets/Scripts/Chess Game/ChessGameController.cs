@@ -5,54 +5,63 @@ using System;
 using System.Linq;
 
 [RequireComponent(typeof(PieceCreator))]
-public class ChessGameController : MonoBehaviour
+public abstract class ChessGameController : MonoBehaviour
 {
     public enum GameState { Init, Play, Finished }
 
     [SerializeField] private BoardLayout startingBoardLayout;
-    [SerializeField] private Board board;
+    private Board board;
+    private UIManager uIManager;
+    private CameraSetup cameraSetup;
 
     private PieceCreator pieceCreator;
-    private ChessPlayer whitePlayer;
-    private ChessPlayer blackPlayer;
-    private ChessPlayer activePlayer;
+    protected ChessPlayer whitePlayer;
+    protected ChessPlayer blackPlayer;
+    protected ChessPlayer activePlayer;
 
-    public GameState state;
+    protected GameState state;
+
+    protected abstract void SetGameState(GameState state);
+    public abstract void TryToStartCurrentGame();
+    public abstract bool CanPerformMove();
 
     private void Awake()
-    {
-        SetDependencies();
-        CreatePlayers();
-    }
-
-    private void CreatePlayers()
-    {
-        whitePlayer = new ChessPlayer(TeamColor.White, board);
-        blackPlayer = new ChessPlayer(TeamColor.Black, board);
-    }
-
-    private void SetDependencies()
     {
         pieceCreator = GetComponent<PieceCreator>();
     }
 
     void Start()
     {
-        StartNewGame();
-        
+        StartNewGame();     
     }
 
-    private void StartNewGame()
+    public void SetDependencies(UIManager uIManager, Board board, CameraSetup cameraSetup)
     {
+        this.uIManager = uIManager;
+        this.board = board;
+        this.cameraSetup = cameraSetup;
+    }
+
+    public void StartNewGame()
+    {
+        uIManager.OnGameStarted();
         SetGameState(GameState.Init);
-        board.SetDependencies(this);
         CreatePiecesFromLayout(startingBoardLayout);
         activePlayer = whitePlayer;
         GenerateAllPossiblePlayerMoves(activePlayer);
-        SetGameState(GameState.Play);
+        TryToStartCurrentGame();
     }
 
-    
+    public void SetupCAmera(TeamColor team)
+    {
+        cameraSetup.SetupCamera(team);
+    }
+
+    public void CreatePlayers()
+    {
+        whitePlayer = new ChessPlayer(TeamColor.White, board);
+        blackPlayer = new ChessPlayer(TeamColor.Black, board);
+    }
 
     private void CreatePiecesFromLayout(BoardLayout layout)
     {
@@ -130,6 +139,7 @@ public class ChessGameController : MonoBehaviour
     private void EndGame()
     {
         Debug.Log("Game Ended");
+        uIManager.OnGameFinished(activePlayer.teamColor.ToString());
         SetGameState(GameState.Finished);
     }
 
@@ -155,10 +165,10 @@ public class ChessGameController : MonoBehaviour
         return activePlayer.teamColor == team;
     }
 
-    private void SetGameState(GameState state)
-    {
-        this.state = state;
-    }
+    //private void SetGameState(GameState state)
+    //{
+    //    this.state = state;
+    //}
 
     public bool IsGameInProgress()
     {

@@ -13,12 +13,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private const byte MAX_PLAYERS = 2;
 
     [SerializeField] private UIManager uIManager;
+    [SerializeField] private GameInitializer gameInitializer;
+    private MultiplayerGameController gameController;
 
     private ChessLevel playerLevel;
 
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
+    public void SetDependencies(MultiplayerGameController gameController)
+    {
+        this.gameController = gameController;
     }
 
     private void Update()
@@ -37,6 +44,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {  
             PhotonNetwork.ConnectUsingSettings();
         }
+    }
+
+    internal bool IsRoomFull()
+    {
+        return PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers;
     }
 
     #region Photon Callbacks
@@ -64,15 +76,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         });
     }
 
-    internal void SelectTeam(int team)
+    public void SelectTeam(int team)
     {
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { TEAM, team } });
+        gameInitializer.InitializeMultiplayerController();
+        gameController.SetLocalPlayer((TeamColor)team);
+        gameController.StartNewGame();
+        gameController.SetupCAmera((TeamColor)team);
     }
 
     // This is called when JoinRandomRoom is succeeded
     public override void OnJoinedRoom()
     {
         Debug.LogError($"Player {PhotonNetwork.LocalPlayer.ActorNumber} joined the room with level {(ChessLevel)PhotonNetwork.CurrentRoom.CustomProperties[LEVEL]}");
+        gameInitializer.CreateMultiplayerBoard(); // this is better done with events
         PrepareTeamSelectionOptions();
         uIManager.ShowTeamSelectionScreen();
     }

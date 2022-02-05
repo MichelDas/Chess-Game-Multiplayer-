@@ -82,6 +82,11 @@
     <Compile Include="Assets/Scripts/Chess Game/NetworkManager.cs" />
     <Compile Include="Assets/Scripts/UI/UIManager.cs" />
     <Compile Include="Assets/Scripts/Chess Game/ChessLevel.cs" />
+    <Compile Include="Assets/Scripts/Chess Game/MultiplayerBoard.cs" />
+    <Compile Include="Assets/Scripts/Chess Game/SinglePlayerGameController.cs" />
+    <Compile Include="Assets/Scripts/Chess Game/MultiplayerGameController.cs" />
+    <Compile Include="Assets/Scripts/Chess Game/GameInitializer.cs" />
+    <Compile Include="Assets/Scripts/Chess Game/CameraSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.xml" />

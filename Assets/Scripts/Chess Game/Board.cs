@@ -10,16 +10,16 @@ public abstract class Board : MonoBehaviour
     [SerializeField] private float squareSize;
 
     private Piece[,] grid;
-    private Piece selectedPiece;
+    [SerializeField] private Piece selectedPiece;
     private ChessGameController chessGameController;
-    private SquareSelector squareSelector;
+    [SerializeField] private SquareSelector squareSelector;
 
     public const int BOARD_SIZE = 8;
 
     public abstract void SelectPieceMoved(Vector2 coords);
     public abstract void SetSelectedPiece(Vector2 coords);
 
-    private void Awake()
+    protected virtual void Awake()
     {
         squareSelector = GetComponent<SquareSelector>();
         CreateGrid();
@@ -43,7 +43,7 @@ public abstract class Board : MonoBehaviour
     // this will be called when player clicks on the board
     public void OnSquareSelected(Vector3 inputPosition)
     {
-        if (!chessGameController.IsGameInProgress())
+        if (!chessGameController || !chessGameController.CanPerformMove())
             return;
 
         Vector2Int coords = CalculateCoordsFromPosition(inputPosition);

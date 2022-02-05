@@ -4,23 +4,26 @@ ScriptsOnlyBuild:
     - Bishop
     - BoarInputHandler
     - BoardLayout
-    - ChessGameController
+    - CameraSetup
     - ColliderInputReciever
+    - GameInitializer
     - InstantTweener
     - King
     - Knight
     - MaterialSetter
+    - MultiplayerBoard
+    - MultiplayerGameController
     - NetworkManager
     - Pawn
     - PieceCreator
     - Queen
     - Rook
     - SinglePlayerBoard
+    - SinglePlayerGameController
     - SquareSelector
     - UIManager
-    PhotonUnityNetworking.Editor.dll:
-    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
+    - Photon.Pun.PhotonView
     - Photon.Pun.ServerSettings
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
@@ -102,6 +105,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2844}
     - Class: 114
+      Script: {instanceID: 2862}
+    - Class: 114
       Script: {instanceID: 2870}
     - Class: 114
       Script: {instanceID: 2876}
@@ -130,13 +135,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4564}
     - Class: 114
-      Script: {instanceID: 4650}
-    - Class: 114
       Script: {instanceID: 16626}
     - Class: 114
       Script: {instanceID: 16936}
     - Class: 114
       Script: {instanceID: 17286}
+    - Class: 114
+      Script: {instanceID: 23708}
+    - Class: 114
+      Script: {instanceID: 23792}
+    - Class: 114
+      Script: {instanceID: 23798}
+    - Class: 114
+      Script: {instanceID: 23854}
+    - Class: 114
+      Script: {instanceID: 23888}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -882,25 +895,19 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
-      Hash: 14ac5797e36b319ef539b954b5fd4900
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ChessGameController
-  - hash:
-      serializedVersion: 2
       Hash: 00c99ff3f40bd11590c670580e513825
     assemblyName: PhotonUnityNetworking.Utilities.dll
     namespaceName: Photon.Pun.UtilityScripts
     className: PhotonTeamsManager
   - hash:
       serializedVersion: 2
-      Hash: d11569107934f8f769455cfe6fdc0835
+      Hash: 07e362be5c25df9ca54175dcb61b6e05
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SinglePlayerBoard
   - hash:
       serializedVersion: 2
-      Hash: 075c777df5000597b3b6bc799111568b
+      Hash: e9153083aede7cfe03b4a176a46d049d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NetworkManager
@@ -910,6 +917,36 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager
+  - hash:
+      serializedVersion: 2
+      Hash: 07e362be5c25df9ca54175dcb61b6e05
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MultiplayerBoard
+  - hash:
+      serializedVersion: 2
+      Hash: 61a91ec406b3afe4aa4c8419e9ac7632
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SinglePlayerGameController
+  - hash:
+      serializedVersion: 2
+      Hash: 61a91ec406b3afe4aa4c8419e9ac7632
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MultiplayerGameController
+  - hash:
+      serializedVersion: 2
+      Hash: 47a440adc1e74111ae9367e85d9c7311
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameInitializer
+  - hash:
+      serializedVersion: 2
+      Hash: a14846babc20804568558d6d6dc44810
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CameraSetup
   platform: 2
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
