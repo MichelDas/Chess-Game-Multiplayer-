@@ -26,12 +26,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject connectScreen;
     [SerializeField] private GameObject teamSelectionScreen;
     [SerializeField] private GameObject gameModeSelectionScreen;
+    [SerializeField] private GameObject Background;
 
     [Header("Other UI")]
     [SerializeField] private Dropdown gameLevelSelection;
 
+    public static UIManager instance;
+
     private void Awake()
     {
+        instance = this;
         gameLevelSelection.AddOptions(Enum.GetNames(typeof(ChessLevel)).ToList());
         OnGameLaunched();
 
@@ -49,25 +53,30 @@ public class UIManager : MonoBehaviour
         DisableAllScreen();
     }
 
-    internal void OnGameStarted()
-    {
-        DisableAllScreen();
-        connectionStatusText.gameObject.SetActive(false);
-    }
-
     // This is called when Multiplayer Mode button is clicked
     public void OnMultiplayerModeSelected()
     {
-        connectionStatusText.gameObject.SetActive(true);
         DisableAllScreen();
         connectScreen.SetActive(true);
     }
 
+    internal void OnGameStarted()
+    {
+        DisableAllScreen();
+        DeactiveMenuBackground();
+        connectionStatusText.gameObject.SetActive(false);
+    }
+
+    
+
     // this is called when connect button is clicked
     public void OnConnect()
     {
-        networkManager.SetPlayerLevel((ChessLevel)gameLevelSelection.value);
-        networkManager.Connect();
+        // here I am converting gameLevelSelection int value to Chesslevel enum values
+        // 0 = beginner, 1 = normal, 2 = pro
+        networkManager.Connect((ChessLevel)gameLevelSelection.value);
+        connectionStatusText.gameObject.SetActive(true);
+
     }
 
     private void DisableAllScreen()
@@ -91,6 +100,7 @@ public class UIManager : MonoBehaviour
 
     public void SelectTeam(int team)
     {
+        DeactiveMenuBackground();
         networkManager.SelectTeam(team);
     }
 
@@ -104,5 +114,10 @@ public class UIManager : MonoBehaviour
     {
         gameoverScreen.SetActive(true);
         resultText.text = string.Format("{0} won", winner);
+    }
+
+    public void DeactiveMenuBackground()
+    {
+        Background.SetActive(false);
     }
 }

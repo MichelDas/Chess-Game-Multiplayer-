@@ -1,24 +1,34 @@
 ﻿<Properties StartupConfiguration="{B6061949-D265-BA4D-C676-96FE9F2872F3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Chess Game/Board.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Chess Game/ChessGameController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Chess Game/ChessGameController.cs" Line="38" Column="21" />
-      <File FileName="Assets/Scripts/Chess Game/Board.cs" Line="46" Column="36" />
-      <File FileName="Assets/Scripts/Chess Game/NetworkManager.cs" Line="86" Column="31" />
-      <File FileName="Assets/Scripts/UI/UIManager.cs" Line="52" Column="19" />
-      <File FileName="Assets/Scripts/Chess Game/MultiplayerBoard.cs" Line="36" Column="53" />
-      <File FileName="Assets/Scripts/Chess Game/SinglePlayerBoard.cs" Line="16" Column="9" />
-      <File FileName="Assets/Scripts/Chess Game/SinglePlayerGameController.cs" Line="18" Column="9" />
-      <File FileName="Assets/Scripts/Chess Game/MultiplayerGameController.cs" Line="35" Column="14" />
-      <File FileName="Assets/Scripts/Chess Game/GameInitializer.cs" Line="20" Column="36" />
+      <File FileName="Assets/Scripts/Chess Game/NetworkManager.cs" Line="87" Column="17" />
+      <File FileName="Assets/Scripts/Chess Game/GameInitializer.cs" Line="64" Column="26" />
+      <File FileName="Assets/Scripts/UI/UIManager.cs" Line="39" Column="38" />
+      <File FileName="Assets/Scripts/Chess Game/MultiplayerBoard.cs" Line="34" Column="26" />
+      <File FileName="Assets/Scripts/Chess Game/SinglePlayerGameController.cs" Line="5" Column="48" />
+      <File FileName="Assets/Scripts/Chess Game/ChessGameController.cs" Line="33" Column="17" />
+      <File FileName="Assets/Scripts/Chess Game/PieceCreator.cs" Line="22" Column="23" />
+      <File FileName="Assets/Scripts/Chess Game/ChessPlayer.cs" Line="120" Column="6" />
+      <File FileName="Assets/Scripts/Chess Game/Piece.cs" Line="22" Column="28" />
+      <File FileName="Assets/Scripts/Chess Game/Board.cs" Line="216" Column="6" />
+      <File FileName="Assets/Scripts/Tweeners/LineTweener.cs" Line="12" Column="1" />
+      <File FileName="Assets/Scripts/Tweeners/ArcTweener.cs" Line="14" Column="51" />
+      <File FileName="Assets/Scripts/Chess Game/MultiplayerGameController.cs" Line="55" Column="1" />
+      <File FileName="Assets/Scripts/Enums/TeamColor.cs" Line="1" Column="13" />
     </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="Unity" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="db441d74-1372-442e-9f10-b691ef99eb64" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="dc2d681f-54f1-41be-b31c-cd6b1a520dfd" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/kyosapor0111/Documents/Priyosoft/Chess Game/Assets/Scripts/UI/UIManager.cs" relfile="Assets/Scripts/UI/UIManager.cs" line="50" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

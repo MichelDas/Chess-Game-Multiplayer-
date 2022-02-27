@@ -13,7 +13,7 @@ public abstract class Piece : MonoBehaviour
 
     public Vector2Int occupiedSquare { get; set; }
 
-    public TeamColor team { get; set; }
+    public TeamColor teamColor { get; set; }
 
     public bool hasMoved { get; private set; }
 
@@ -40,7 +40,7 @@ public abstract class Piece : MonoBehaviour
         materialSetter.SetSingleMaterial(mat);
     }
 
-    internal bool IsAttackingPieceOfType<T>() where T : Piece
+    public bool IsAttackingPieceOfType<T>() where T : Piece
     {
         foreach(var square in availableMoves)
         {
@@ -52,7 +52,7 @@ public abstract class Piece : MonoBehaviour
 
     public bool IsFromSameTeam(Piece piece)
     {
-        return team == piece.team;
+        return teamColor == piece.teamColor;
     }
 
     public bool CanMoveTo(Vector2Int coords)
@@ -60,9 +60,8 @@ public abstract class Piece : MonoBehaviour
         return availableMoves.Contains(coords);
     }
 
-    public virtual void MovePiece(Vector2Int coords)
+    public virtual void MovePiece(Vector2Int coords, Vector3 targetPosition)
     {
-        Vector3 targetPosition = board.CalculatePositionFromCoords(coords);
         occupiedSquare = coords;
         hasMoved = true;
         tweener.MoveTo(transform, targetPosition);
@@ -73,12 +72,12 @@ public abstract class Piece : MonoBehaviour
         availableMoves.Add(coords);
     }
 
-    public void SetData(Vector2Int coords, TeamColor teamColor, Board board)
+    public void SetData(Vector2Int coords, TeamColor teamColor, Board board, Vector3 targetPosition  )
     {
-        this.team = teamColor;
+        this.teamColor = teamColor;
         occupiedSquare = coords;
         this.board = board;
-        transform.position = board.CalculatePositionFromCoords(coords);
+        transform.position = targetPosition;
     }
 
 }

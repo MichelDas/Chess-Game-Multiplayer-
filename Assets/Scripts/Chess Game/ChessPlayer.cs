@@ -61,20 +61,22 @@ public class ChessPlayer
         // example: selectedpiece is King
         // oponent is the player who is checking the king that is me
 
-        List<Vector2Int> coordsToRomove = new List<Vector2Int>();
+        List<Vector2Int> coordsToRemove = new List<Vector2Int>();
+
+        coordsToRemove.Clear();
 
         foreach(var coords in selectedPiece.availableMoves)
         {
             Piece pieceOnSquare = board.GetPieceOnSquare(coords);
             board.UpdateBoardOnPieceMove(coords, selectedPiece.occupiedSquare, selectedPiece, null);
-
+            oponent.GenerateAllPossibleMoves();
             if(oponent.CheckIfIsAttackingPiece<T>())
-                coordsToRomove.Add(coords);
+                coordsToRemove.Add(coords);
 
             board.UpdateBoardOnPieceMove(selectedPiece.occupiedSquare, coords, selectedPiece, pieceOnSquare);
         }
 
-        foreach(var coords in coordsToRomove)
+        foreach(var coords in coordsToRemove)
         {
             selectedPiece.availableMoves.Remove(coords);
         }
@@ -110,5 +112,10 @@ public class ChessPlayer
             }
         }
         return false;
+    }
+
+    internal void OnGameRestarted()
+    {
+        activePieces.Clear();
     }
 }

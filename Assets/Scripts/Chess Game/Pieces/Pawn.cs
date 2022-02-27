@@ -7,7 +7,7 @@ public class Pawn : Piece
     public override List<Vector2Int> SelectAvailableSquares()
     {
         availableMoves.Clear();
-        Vector2Int direction = team == TeamColor.White ? Vector2Int.up : Vector2Int.down;
+        Vector2Int direction = teamColor == TeamColor.White ? Vector2Int.up : Vector2Int.down;
         float range = hasMoved ? 1 : 2;
 
         for(int i=1; i<=range; i++)

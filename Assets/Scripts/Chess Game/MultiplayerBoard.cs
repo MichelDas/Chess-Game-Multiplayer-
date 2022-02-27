@@ -7,9 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(PhotonView))]
 public class MultiplayerBoard : Board
 {
-    // although this will contain RPC method def
-    // the RPC method is be called from photonview class
-    // so we have created a photonview ref
+    // although this will contain RPC method definitions,
+    // the RPC methods are be called from the PhotonView class
+    // so we have created a PhotonView ref
     private PhotonView photonView;
 
     protected override void Awake()
@@ -19,7 +19,7 @@ public class MultiplayerBoard : Board
     }
 
 
-    public override void SelectPieceMoved(Vector2 coords)
+    public override void OnSelectedPieceMoved(Vector2 coords)
     {
         photonView.RPC(nameof(RPC_OnSelectedPieceMoved), RpcTarget.AllBuffered, new object[] { coords });
     }
@@ -28,7 +28,7 @@ public class MultiplayerBoard : Board
     private void RPC_OnSelectedPieceMoved(Vector2 coords)
     {
         Vector2Int intCoords = new Vector2Int(Mathf.RoundToInt(coords.x), Mathf.RoundToInt(coords.y));
-        OnSelectedPieceMoved(intCoords);
+        MoveSelectedPiece(intCoords);
     }
 
     public override void SetSelectedPiece(Vector2 coords)

@@ -17,12 +17,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private MultiplayerGameController gameController;
 
     private ChessLevel playerLevel;
+    private bool isWaitingforSecondPlayer;
 
     private void Awake()
     {
+        // this will sync the scene in all the clients
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
+    // this is called from the gameInitializer 
     public void SetDependencies(MultiplayerGameController gameController)
     {
         this.gameController = gameController;
@@ -30,11 +33,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        uIManager.SetConnectionStatus(PhotonNetwork.NetworkClientState.ToString());
+        if(!isWaitingforSecondPlayer)
+            uIManager.SetConnectionStatus(PhotonNetwork.NetworkClientState.ToString());
     }
 
-    public void Connect()
+    public void Connect(ChessLevel level)
     {
+        isWaitingforSecondPlayer = false;
+        playerLevel = level;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { LEVEL, level } });
+
         if (PhotonNetwork.IsConnected)
         {
             Debug.Log($"Connected to Server. Looking for random room with level {playerLevel}");
@@ -56,7 +64,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // this callback is called when we have connected to the server
     public override void OnConnectedToMaster()
     {
-        Debug.Log($"Connected to Server. Looking for random room with level {playerLevel}");
+        Debug.Log($"Connected to Server. Looking for random room with level {playerLevel} ");
         // after connecting to the server,
         // we will try connecting to a random room
         // the JoinRandomRoom() will called either of two callbacks
@@ -67,7 +75,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // this is called if JoinRandomRoom() failed
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.LogError($"Joining random room failed because of {message}. Creating a new room with player level {playerLevel}"); 
+        Debug.Log($"Joining random room failed because of {message}. Creating a new room with player level {playerLevel}"); 
         PhotonNetwork.CreateRoom(null, new RoomOptions
         {
             CustomRoomPropertiesForLobby = new string[] { LEVEL },
@@ -83,12 +91,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         gameController.SetLocalPlayer((TeamColor)team);
         gameController.StartNewGame();
         gameController.SetupCAmera((TeamColor)team);
+        isWaitingforSecondPlayer = true;
+        uIManager.SetConnectionStatus("Waiting for player to join");
     }
 
     // This is called when JoinRandomRoom is succeeded
     public override void OnJoinedRoom()
     {
-        Debug.LogError($"Player {PhotonNetwork.LocalPlayer.ActorNumber} joined the room with level {(ChessLevel)PhotonNetwork.CurrentRoom.CustomProperties[LEVEL]}");
+        Debug.Log($"Player {PhotonNetwork.LocalPlayer.ActorNumber} joined the room with level {(ChessLevel)PhotonNetwork.CurrentRoom.CustomProperties[LEVEL]}");
         gameInitializer.CreateMultiplayerBoard(); // this is better done with events
         PrepareTeamSelectionOptions();
         uIManager.ShowTeamSelectionScreen();
@@ -111,13 +121,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Player {newPlayer.ActorNumber} entered the room");
     }
-
-    public void SetPlayerLevel(ChessLevel level)
-    {
-        playerLevel = level;
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { LEVEL, level } });
-    }
-
 
     #endregion
 }

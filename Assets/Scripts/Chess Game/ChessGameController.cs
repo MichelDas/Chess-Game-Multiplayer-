@@ -30,26 +30,16 @@ public abstract class ChessGameController : MonoBehaviour
         pieceCreator = GetComponent<PieceCreator>();
     }
 
-    void Start()
-    {
-        StartNewGame();     
-    }
-
-    public void SetDependencies(UIManager uIManager, Board board, CameraSetup cameraSetup)
-    {
-        this.uIManager = uIManager;
-        this.board = board;
-        this.cameraSetup = cameraSetup;
-    }
-
     public void StartNewGame()
     {
         uIManager.OnGameStarted();
+
         SetGameState(GameState.Init);
         CreatePiecesFromLayout(startingBoardLayout);
         activePlayer = whitePlayer;
         GenerateAllPossiblePlayerMoves(activePlayer);
         TryToStartCurrentGame();
+
     }
 
     public void SetupCAmera(TeamColor team)
@@ -57,7 +47,15 @@ public abstract class ChessGameController : MonoBehaviour
         cameraSetup.SetupCamera(team);
     }
 
-    public void CreatePlayers()
+    public void InitializeGame(UIManager uIManager, Board board, CameraSetup cameraSetup)
+    {
+        this.uIManager = uIManager;
+        this.board = board;
+        this.cameraSetup = cameraSetup;
+        CreatePlayers();
+    }
+
+    private void CreatePlayers()
     {
         whitePlayer = new ChessPlayer(TeamColor.White, board);
         blackPlayer = new ChessPlayer(TeamColor.Black, board);
@@ -79,7 +77,11 @@ public abstract class ChessGameController : MonoBehaviour
     private void CreatePieceAndInitialize(Vector2Int squareCoords, TeamColor team, Type type)
     {
         Piece newPiece = pieceCreator.CreatePiece(type).GetComponent<Piece>();
-        newPiece.SetData(squareCoords, team, board);
+
+        if (team == TeamColor.Black)
+            newPiece.transform.eulerAngles = newPiece.transform.eulerAngles + 180.0f * Vector3.up;
+        newPiece.transform.SetParent(board.transform);
+        newPiece.SetData(squareCoords, team, board, board.CalculatePositionFromCoords(squareCoords));
 
         Material teamMaterial = pieceCreator.GetTeamMaterial(team);
         newPiece.SetMaterial(teamMaterial);
@@ -98,7 +100,7 @@ public abstract class ChessGameController : MonoBehaviour
     public void EndTurn()
     {
         GenerateAllPossiblePlayerMoves(activePlayer);
-        GenerateAllPossiblePlayerMoves(GetopponentToPlayer(activePlayer));
+        GenerateAllPossiblePlayerMoves(GetopponentToCurrentPlayer(activePlayer));
         if (CheckIfGameIsFinished())
             EndGame();
         else
@@ -107,13 +109,32 @@ public abstract class ChessGameController : MonoBehaviour
 
     private bool CheckIfGameIsFinished()
     {
+
+        //if (kingAttackingPieces.Length > 0)
+        //{
+        //    ChessPlayer oppositePlayer = GetOpponentToPlayer(activePlayer);
+        //    Piece attackedKing = oppositePlayer.GetPiecesOfType<King>().FirstOrDefault();
+        //    oppositePlayer.RemoveMovesEnablingAttakOnPieceOfType<King>(activePlayer, attackedKing);
+
+        //    int avaliableKingMoves = attackedKing.avaliableMoves.Count;
+        //    if (avaliableKingMoves == 0)
+        //    {
+        //        bool canCoverKing = oppositePlayer.CanHidePieceFromAttack<King>(activePlayer);
+        //        if (!canCoverKing)
+        //            return true;
+        //    }
+        //}
+        //return false;
+
         Piece[] kingAttackingPieces = activePlayer.GetPiecesAttackingOppositePieceOfType<King>();
+        Debug.Log("checking if game is finished");
 
         // if the king is checked
         if (kingAttackingPieces.Length > 0)
         {
+            Debug.Log("Some piece is attacking king");
             // getting opponent reference
-            ChessPlayer oppositePlayer = GetopponentToPlayer(activePlayer);
+            ChessPlayer oppositePlayer = GetopponentToCurrentPlayer(activePlayer);
 
             // getting the reference of the king
             Piece attackedKing = oppositePlayer.GetPiecesOfType<King>().FirstOrDefault();
@@ -143,9 +164,24 @@ public abstract class ChessGameController : MonoBehaviour
         SetGameState(GameState.Finished);
     }
 
+    public void RestartGame()
+    {
+        DestroyPieces();
+        board.OnGameRestarted();
+        whitePlayer.OnGameRestarted();
+        blackPlayer.OnGameRestarted();
+        StartNewGame();
+    }
+
+    private void DestroyPieces()
+    {
+        whitePlayer.activePieces.ForEach(p => Destroy(p.gameObject));
+        blackPlayer.activePieces.ForEach(p => Destroy(p.gameObject));
+    }
+
     public void OnPieceRemoved(Piece piece)
     {
-        ChessPlayer pieceOwner = piece.team == TeamColor.White ? whitePlayer : blackPlayer;
+        ChessPlayer pieceOwner = piece.teamColor == TeamColor.White ? whitePlayer : blackPlayer;
         pieceOwner.RemovePiece(piece);
         Destroy(piece.gameObject);
     }
@@ -155,7 +191,7 @@ public abstract class ChessGameController : MonoBehaviour
         activePlayer = activePlayer == whitePlayer ? blackPlayer : whitePlayer;
     }
 
-    private ChessPlayer GetopponentToPlayer(ChessPlayer activePlayer)
+    private ChessPlayer GetopponentToCurrentPlayer(ChessPlayer activePlayer)
     {
         return activePlayer == whitePlayer ? blackPlayer : whitePlayer;
     }
@@ -165,11 +201,6 @@ public abstract class ChessGameController : MonoBehaviour
         return activePlayer.teamColor == team;
     }
 
-    //private void SetGameState(GameState state)
-    //{
-    //    this.state = state;
-    //}
-
     public bool IsGameInProgress()
     {
         return state == GameState.Play;
@@ -178,7 +209,7 @@ public abstract class ChessGameController : MonoBehaviour
     // This will remove all moves where the king will be checked
     public void RemoveMovesEnablingAttackOnPieceOfType<T>(Piece piece) where T : Piece
     {
-        activePlayer.RemoveMovesEnablingAttackOnPiece<T>(GetopponentToPlayer(activePlayer), piece);
+        activePlayer.RemoveMovesEnablingAttackOnPiece<T>(GetopponentToCurrentPlayer(activePlayer), piece);
     }
 
 

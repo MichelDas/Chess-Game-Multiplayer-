@@ -16,7 +16,7 @@ public abstract class Board : MonoBehaviour
 
     public const int BOARD_SIZE = 8;
 
-    public abstract void SelectPieceMoved(Vector2 coords);
+    public abstract void OnSelectedPieceMoved(Vector2 coords);
     public abstract void SetSelectedPiece(Vector2 coords);
 
     protected virtual void Awake()
@@ -35,10 +35,7 @@ public abstract class Board : MonoBehaviour
         grid = new Piece[BOARD_SIZE, BOARD_SIZE];
     }
 
-    public  Vector3 CalculatePositionFromCoords(Vector2Int coords)
-    {
-        return bootomLeftSquareTransform.position + new Vector3(coords.x * squareSize, 0f, coords.y * squareSize);
-    }
+    
 
     // this will be called when player clicks on the board
     public void OnSquareSelected(Vector3 inputPosition)
@@ -56,29 +53,30 @@ public abstract class Board : MonoBehaviour
             if (piece != null && selectedPiece == piece)
                 DeselectPiece();
             // if I am selecting a different piece of my team
-            else if (piece != null && selectedPiece != piece && chessGameController.IsTeamTurnActive(piece.team))
+            else if (piece != null && selectedPiece != piece && chessGameController.IsTeamTurnActive(piece.teamColor))
                 SelectPiece(coords);
             // if I am selecting a square where the piece can be moved
             else if (selectedPiece.CanMoveTo(coords))
-                SelectPieceMoved(coords);
+                OnSelectedPieceMoved((Vector2)coords);
         }
         // when No piece is selected
         else
         {
             // if the piece clicked, is of my color
             // select it
-            if (piece != null && chessGameController.IsTeamTurnActive(piece.team))
+            if (piece != null && chessGameController.IsTeamTurnActive(piece.teamColor))
             {
                 SelectPiece(coords);
             }
         }
     }
 
-
     private void SelectPiece(Vector2Int coords)
     {
         Piece piece = GetPieceOnSquare(coords);
-        chessGameController.RemoveMovesEnablingAttackOnPieceOfType<King>(piece);
+        chessGameController.RemoveMovesEnablingAttackOnPieceOfType<King>(piece); // ei line ta bujhi nai
+
+        //SelectPiece()  -> SetSelectPiece() -> this.OnSetSelectedPiece()
         SetSelectedPiece(coords);
         List<Vector2Int> selection = selectedPiece.availableMoves;
         ShowSelectionSquares(selection);
@@ -104,24 +102,16 @@ public abstract class Board : MonoBehaviour
     }
 
     // this is called when a piece is moved
-    // in a coords
-    public void OnSelectedPieceMoved(Vector2Int coords)
+    // in a coords  
+    public void MoveSelectedPiece(Vector2Int coords)
     {
         // opponent er piece kete fela
         TryToTakeOppositePiece(coords);
 
         UpdateBoardOnPieceMove(coords, selectedPiece.occupiedSquare, selectedPiece, null);
-        selectedPiece.MovePiece(coords);
+        selectedPiece.MovePiece(coords, CalculatePositionFromCoords(coords));
         DeselectPiece();
         EndTurn();
-    }
-
-    // this will get the piece in the coords and
-    // assign it in the selectedPiece
-    public void OnSetSelectedPiece(Vector2Int intCoords)
-    {
-        Piece piece = GetPieceOnSquare(intCoords);
-        selectedPiece = piece;
     }
 
     // this will eleminate the piece on coords and
@@ -143,17 +133,6 @@ public abstract class Board : MonoBehaviour
         }
     }
 
-    private void EndTurn()
-    {
-        chessGameController.EndTurn();
-    }
-
-    public void UpdateBoardOnPieceMove(Vector2Int NewCoords, Vector2Int oldCoords, Piece newPiece, Piece oldPiece)
-    {
-        grid[oldCoords.x, oldCoords.y] = oldPiece;
-        grid[NewCoords.x, NewCoords.y] = newPiece;
-    }
-
     public Piece GetPieceOnSquare(Vector2Int coords)
     {
         if (CheckIfCoordinatesAreOnBoard(coords))
@@ -161,7 +140,28 @@ public abstract class Board : MonoBehaviour
             return grid[coords.x, coords.y];
         }
         return null;
+    }
 
+    // eita newPiece k newCoords a, ar oldPiece k oldCoords a boshai dibe
+    // piece move korar belai, je square a nite chacchi oi square er oldPiece null hobe,
+    // oldCoords hobe new piece er current position, newCoords hobe jekhane move korte chai.
+    public void UpdateBoardOnPieceMove(Vector2Int NewCoords, Vector2Int oldCoords, Piece newPiece, Piece oldPiece)
+    {
+        grid[oldCoords.x, oldCoords.y] = oldPiece;
+        grid[NewCoords.x, NewCoords.y] = newPiece;
+    }
+
+    // this will get the piece in the coords and
+    // assign it in the selectedPiece
+    public void OnSetSelectedPiece(Vector2Int intCoords)
+    {
+        Piece piece = GetPieceOnSquare(intCoords);
+        selectedPiece = piece;
+    }
+
+    private void EndTurn()
+    {
+        chessGameController.EndTurn();
     }
 
     public bool CheckIfCoordinatesAreOnBoard(Vector2Int coords)
@@ -180,6 +180,12 @@ public abstract class Board : MonoBehaviour
 
     }
 
+    public Vector3 CalculatePositionFromCoords(Vector2Int coords)
+    {
+        return bootomLeftSquareTransform.position + new Vector3(coords.x * squareSize, 0f, coords.y * squareSize);
+    }
+
+
     public bool HasPiece(Piece piece)
     {
         for(int i=0; i<BOARD_SIZE; i++)
@@ -196,12 +202,19 @@ public abstract class Board : MonoBehaviour
         return false;
     }
 
+    
     public void SetPieceOnBoard(Vector2Int squareCoords, Piece newPiece)
     {
         if (CheckIfCoordinatesAreOnBoard(squareCoords))
             grid[squareCoords.x, squareCoords.y] = newPiece;
     }
 
-    
+    internal void OnGameRestarted()
+    {
+        selectedPiece = null;
+        CreateGrid();
+    }
+
+
 
 }

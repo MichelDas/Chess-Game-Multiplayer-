@@ -14,7 +14,7 @@ public class MultiplayerGameController : ChessGameController, IOnEventCallback
     private ChessPlayer localPlayer;
     private NetworkManager networkManager;
 
-    public void SetMultiplayerDependencies(NetworkManager networkManager)
+    public void SetNetworkManager(NetworkManager networkManager)
     {
         this.networkManager = networkManager;
     }

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3340028}
   - component: {fileID: 2380346}
   - component: {fileID: 5254746779395180228}
-  - component: {fileID: 8015390331665667731}
   - component: {fileID: 2954320258013314960}
+  - component: {fileID: -699890728626774020}
   m_Layer: 0
   m_Name: Bishop
   m_TagString: Untagged
@@ -96,18 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215f215ef98bb42e390e17a08293dea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8015390331665667731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eca629afbd4e410da7df764af33543c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2954320258013314960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,3 +109,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableMoves: []
+--- !u!114 &-699890728626774020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7a9da7e366a490b888824901ee489e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5

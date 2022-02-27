@@ -1652,7 +1652,7 @@ namespace Photon.Pun
             {
                 if (offlineModeRoom != null)
                 {
-                    Debug.LogError("JoinRandomRoom failed. In offline mode you still have to leave a room to enter another.");
+                    Debug.Log("JoinRandomRoom failed. In offline mode you still have to leave a room to enter another.");
                     return false;
                 }
                 EnterOfflineRoom("offline room", null, true);
@@ -1660,7 +1660,7 @@ namespace Photon.Pun
             }
             if (NetworkingClient.Server != ServerConnection.MasterServer || !IsConnectedAndReady)
             {
-                Debug.LogError("JoinRandomRoom failed. Client is on "+ NetworkingClient.Server+ " (must be Master Server for matchmaking)" + (IsConnectedAndReady ? " and ready" : " but not ready for operations (State: "+ NetworkingClient.State + ")") + ". Wait for callback: OnJoinedLobby or OnConnectedToMaster.");
+                Debug.Log("JoinRandomRoom failed. Client is on "+ NetworkingClient.Server+ " (must be Master Server for matchmaking)" + (IsConnectedAndReady ? " and ready" : " but not ready for operations (State: "+ NetworkingClient.State + ")") + ". Wait for callback: OnJoinedLobby or OnConnectedToMaster.");
                 return false;
             }
 
